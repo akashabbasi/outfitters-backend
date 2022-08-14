@@ -3,7 +3,7 @@ import ms from 'ms';
 import { version } from 'package.json';
 
 export default registerAs(
-  'app', 
+  'app',
   (): Record<string, any> => ({
     name: process.env.APP_NAME,
     env: process.env.APP_ENV || 'development',
