@@ -2,6 +2,7 @@ import {
   BadRequestException,
   CanActivate,
   ExecutionContext,
+  Injectable,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { ClassConstructor, plainToInstance } from 'class-transformer';
@@ -9,6 +10,7 @@ import { validate, ValidationError } from 'class-validator';
 import { REQUEST_PARAM_CLASS_DTOS_META_KEY } from '../constants/request.constant';
 import { ENUM_REQUEST_STATUS_CODE_ERROR } from '../constants/request.status-code.constant';
 
+@Injectable()
 export class RequestParamRawGuard implements CanActivate {
   constructor(private readonly reflector: Reflector) {}
 
@@ -28,11 +30,10 @@ export class RequestParamRawGuard implements CanActivate {
           statusCode: ENUM_REQUEST_STATUS_CODE_ERROR.REQUEST_VALIDATION_ERROR,
           message: 'http.clientError.badRequest',
           errors: errors,
-        })
+        });
       }
     }
 
     return true;
   }
-
 }

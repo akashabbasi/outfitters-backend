@@ -19,6 +19,7 @@ import { DatabaseOptionsService } from './database/services/database.options.ser
 import { ErrorModule } from './error/error.module';
 import { ResponseModule } from './response/response.module';
 import { AuthModule } from './auth/auth.module';
+import { HelperModule } from './helper/helper.module';
 
 @Module({
   imports: [
@@ -115,6 +116,7 @@ import { AuthModule } from './auth/auth.module';
     ErrorModule,
     ResponseModule,
     AuthModule,
+    HelperModule,
   ],
 })
 export class CommonModule {}
