@@ -16,6 +16,9 @@ import { DatabaseOptionsModule } from './database/database.module';
 import { PaginationModule } from './pagination/pagination.module';
 import { DATABASE_CONNECTION_NAME } from './database/constants/database.constant';
 import { DatabaseOptionsService } from './database/services/database.options.service';
+import { ErrorModule } from './error/error.module';
+import { ResponseModule } from './response/response.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -109,6 +112,9 @@ import { DatabaseOptionsService } from './database/services/database.options.ser
     MessageModule,
     DebuggerModule,
     PaginationModule,
+    ErrorModule,
+    ResponseModule,
+    AuthModule,
   ],
 })
 export class CommonModule {}
