@@ -2,24 +2,11 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { WinstonModule } from 'nest-winston';
 import { MongooseModule } from '@nestjs/mongoose';
-import { DebuggerOptionService } from './debugger/services/debugger.option.service';
-import { RequestModule } from './request/request.module';
-import { MessageModule } from './message/message.module';
 import Joi from 'joi';
 import Configs from '../configs';
-import { ENUM_MESSAGE_LANGUAGE } from './message/constants/message.enum.constant';
-import {
-  DebuggerModule,
-  DebuggerOptionsModule,
-} from './debugger/debugger.module';
 import { DatabaseOptionsModule } from './database/database.module';
-import { PaginationModule } from './pagination/pagination.module';
 import { DATABASE_CONNECTION_NAME } from './database/constants/database.constant';
 import { DatabaseOptionsService } from './database/services/database.options.service';
-import { ErrorModule } from './error/error.module';
-import { ResponseModule } from './response/response.module';
-import { AuthModule } from './auth/auth.module';
-import { HelperModule } from './helper/helper.module';
 
 @Module({
   imports: [
@@ -96,12 +83,12 @@ import { HelperModule } from './helper/helper.module';
         abortEarly: true,
       },
     }),
-    WinstonModule.forRootAsync({
-      inject: [DebuggerOptionService],
-      imports: [DebuggerOptionsModule],
-      useFactory: (debuggerOptionService: DebuggerOptionService) =>
-        debuggerOptionService.createLogger(),
-    }),
+    // WinstonModule.forRootAsync({
+    //   inject: [],
+    //   imports: [],
+    //   useFactory: (debuggerOptionService: DebuggerOptionService) =>
+    //     debuggerOptionService.createLogger(),
+    // }),
     MongooseModule.forRootAsync({
       connectionName: DATABASE_CONNECTION_NAME,
       imports: [DatabaseOptionsModule],
@@ -109,14 +96,6 @@ import { HelperModule } from './helper/helper.module';
       useFactory: (databaseOptionsService: DatabaseOptionsService) =>
         databaseOptionsService.createMongooseOptions(),
     }),
-    RequestModule,
-    MessageModule,
-    DebuggerModule,
-    PaginationModule,
-    ErrorModule,
-    ResponseModule,
-    AuthModule,
-    HelperModule,
   ],
 })
 export class CommonModule {}
