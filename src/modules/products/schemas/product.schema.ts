@@ -4,6 +4,4 @@ import { Schema } from '@nestjs/mongoose';
   timestamps: true,
   versionKey: false,
 })
-export class ProductEntity {
-
-}
+export class ProductEntity {}
