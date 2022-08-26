@@ -10,7 +10,9 @@ export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 
   @Post()
-  async create(@Body() createCategoryDto: CategoryCreateDto) {}
+  async create(@Body() createCategoryDto: CategoryCreateDto): Promise<any> {
+    return this.categoryService.create(createCategoryDto);
+  }
   
   async findAll() {}
   async findOne() {}

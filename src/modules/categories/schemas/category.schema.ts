@@ -23,13 +23,6 @@ export class Category {
 
   @Prop({
     required: true,
-    unique: true,
-    trim: true,
-  })
-  slug: string;
-
-  @Prop({
-    required: true,
     trim: true,
     match: [
       /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/,

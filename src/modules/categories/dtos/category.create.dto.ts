@@ -1,17 +1,17 @@
 import { Type } from 'class-transformer';
 import {
-  IsEmail,
   IsNotEmpty,
   IsString,
   Length,
   MaxLength,
   MinLength,
   IsMongoId,
+  IsOptional,
 } from 'class-validator';
 import { IsCategoryExist } from '../validators/category-exist.validator';
 
 export class CategoryCreateDto {
-  @IsEmail()
+  @IsString()
   @IsNotEmpty()
   @MaxLength(100)
   @Type(() => String)
@@ -27,5 +27,6 @@ export class CategoryCreateDto {
   @IsMongoId()
   @Length(24)
   @Type(() => String)
+  @IsOptional()
   parentCategory: string;
 }

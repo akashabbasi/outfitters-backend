@@ -9,6 +9,7 @@ import {
 } from './schemas/category.schema';
 import { CategoryService } from './services/category.service';
 import { IsCategoryExistConstraint } from './validators/category-exist.validator';
+
 @Module({
   imports: [
     MongooseModule.forFeature(
@@ -25,4 +26,4 @@ import { IsCategoryExistConstraint } from './validators/category-exist.validator
   controllers: [CategoryController],
   providers: [CategoryService, IsCategoryExistConstraint],
 })
-export class CategoryModule {}
+export class CategoriesModule {}

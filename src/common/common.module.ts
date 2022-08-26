@@ -2,12 +2,14 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { WinstonModule } from 'nest-winston';
 import { MongooseModule } from '@nestjs/mongoose';
+import { RequestModule } from './request/request.module';
 import * as Joi from 'joi';
 import Configs from '../configs';
 import { DatabaseOptionsModule } from './database/database.module';
 import { DATABASE_CONNECTION_NAME } from './database/constants/database.constant';
 import { DatabaseOptionsService } from './database/services/database.options.service';
 import { ENUM_MESSAGE_LANGUAGE } from './message/constants/message.enum.constant';
+import { ResponseModule } from './response/response.module';
 
 @Module({
   imports: [
@@ -97,6 +99,8 @@ import { ENUM_MESSAGE_LANGUAGE } from './message/constants/message.enum.constant
       useFactory: (databaseOptionsService: DatabaseOptionsService) =>
         databaseOptionsService.createMongooseOptions(),
     }),
+    RequestModule,
+    ResponseModule,
   ],
 })
 export class CommonModule {}
