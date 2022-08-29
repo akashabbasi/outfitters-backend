@@ -19,6 +19,7 @@ export class CategoryService {
       imageUrl:
         'https://bluemoon.s3.amazonaws.com/0839473-hflkjdoeuri-0938.jpg',
     });
+
   }
 
   async findOne() {}

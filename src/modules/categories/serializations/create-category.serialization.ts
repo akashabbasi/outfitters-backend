@@ -6,6 +6,7 @@ export class CreateCategorySerialization {
 
   readonly name: string;
   readonly description: string;
+  @Exclude()
   readonly isActive: boolean;
   readonly imageUrl: string;
   

@@ -1,0 +1,1 @@
+export type IMessage = Record<string, any>;
