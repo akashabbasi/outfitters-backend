@@ -6,6 +6,7 @@ import { CreateCategorySerialization } from '../serializations/create-category.s
 import { IResponse } from 'src/common/response/response.interface';
 import { CategoryDocument } from '../schemas/category.schema';
 import { ENUM_CATEGORY_STATUS_CODE_SUCCESS } from '../constants/category.status-code.constant';
+import { ICategory } from '../interfaces/category.interface';
 
 @Controller({
   version: '1',
@@ -21,10 +22,15 @@ export class CategoryController {
   async create(
     @Body() createCategoryDto: CategoryCreateDto,
   ): Promise<IResponse> {
-    const category: CategoryDocument = await this.categoryService.create(
+    const category: ICategory = await this.categoryService.create(
       createCategoryDto,
     );
-    return category;
+    return {
+      metadata: {
+        message: 'Category created successfully',
+      },
+      ...category
+    };
   }
   
   async findAll() {}

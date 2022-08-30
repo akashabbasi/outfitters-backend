@@ -10,6 +10,7 @@ import { DATABASE_CONNECTION_NAME } from './database/constants/database.constant
 import { DatabaseOptionsService } from './database/services/database.options.service';
 import { ENUM_MESSAGE_LANGUAGE } from './message/constants/message.enum.constant';
 import { ResponseModule } from './response/response.module';
+import { MiddlewareModule } from './middleware/middleware.module';
 
 @Module({
   imports: [
@@ -101,6 +102,7 @@ import { ResponseModule } from './response/response.module';
     }),
     RequestModule,
     ResponseModule,
+    MiddlewareModule,
   ],
 })
 export class CommonModule {}

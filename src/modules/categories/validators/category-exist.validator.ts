@@ -23,7 +23,7 @@ export class IsCategoryExistConstraint implements ValidatorConstraintInterface {
       .then((category) => (category ? true : false));
   }
   defaultMessage?(validationArguments?: ValidationArguments): string {
-    return `Category id is not valid`;
+    return `Category not found`;
   }
 }
 

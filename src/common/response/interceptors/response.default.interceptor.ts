@@ -76,8 +76,10 @@ export class ResponseDefaultInterceptor
               );
             }
 
+            let message: string;
             if (metadata) {
               statusCode = metadata.statusCode || statusCode;
+              message = metadata.message ? metadata.message : undefined;
 
               delete metadata.statusCode;
               delete metadata.message;
@@ -91,6 +93,7 @@ export class ResponseDefaultInterceptor
 
             return {
               statusCode,
+              message,
               metadata: { ...resMetadata, ...metadata },
               data: serialization,
             };
