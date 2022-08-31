@@ -11,6 +11,7 @@ import { DatabaseOptionsService } from './database/services/database.options.ser
 import { ENUM_MESSAGE_LANGUAGE } from './message/constants/message.enum.constant';
 import { ResponseModule } from './response/response.module';
 import { MiddlewareModule } from './middleware/middleware.module';
+import { ErrorModule } from './error/error.module';
 
 @Module({
   imports: [
@@ -100,6 +101,7 @@ import { MiddlewareModule } from './middleware/middleware.module';
       useFactory: (databaseOptionsService: DatabaseOptionsService) =>
         databaseOptionsService.createMongooseOptions(),
     }),
+    ErrorModule,
     RequestModule,
     ResponseModule,
     MiddlewareModule,

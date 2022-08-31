@@ -1,8 +1,8 @@
-import { NestMiddleware } from '@nestjs/common';
+import { Injectable, NestMiddleware } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Request, Response, NextFunction } from 'express';
 import rateLimit from 'express-rate-limit';
-
+@Injectable()
 export class RateLimitMiddleware implements NestMiddleware {
   constructor(private readonly configService: ConfigService) {}
 
