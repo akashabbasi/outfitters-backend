@@ -21,7 +21,6 @@ export class ErrorHttpFilter implements ExceptionFilter {
     const httpStatusCode: number = exception.getStatus();
     const request = ctx.getRequest<IRequestApp>();
     const responseExpress: Response = ctx.getResponse<Response>();
-
     // get metadata
     const __class = request.__class;
     const __function = request.__function;
