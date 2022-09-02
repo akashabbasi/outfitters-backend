@@ -96,6 +96,7 @@ export class AwsS3Service {
   async putItemInBucket(
     filename: string,
     content: string | Uint8Array | Buffer | Readable | ReadableStream | Blob,
+    mimeType: string,
     options?: IAwsS3PutItemOptions,
   ): Promise<IAwsS3> {
     let path: string = options && options.path ? options.path : undefined;
@@ -113,6 +114,7 @@ export class AwsS3Service {
       Key: key,
       Body: content,
       ACL: acl,
+      ContentType: mimeType,
     });
 
     await this.s3Client.send(command);

@@ -27,9 +27,9 @@ export class CategoryController {
     @UploadedFile(FileRequiredPipe, FileSizeImagePipe)
     file: IFile,
   ): Promise<IResponse> {
-    console.log(file);
     const category: ICategory = await this.categoryService.create(
       createCategoryDto,
+      file,
     );
     return {
       metadata: {

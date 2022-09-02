@@ -1,8 +1,8 @@
 import { registerAs } from '@nestjs/config';
 
 export default registerAs(
-  'user',
+  'category',
   (): Record<string, any> => ({
-    uploadPath: '/users',
+    uploadPath: '/categories',
   }),
 );
