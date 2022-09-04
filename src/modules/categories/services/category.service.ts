@@ -10,6 +10,7 @@ import { ICategory } from '../interfaces/category.interface';
 import { AwsS3Service } from 'src/common/aws/services/aws.s3.service';
 import { HelperIdentifierService } from 'src/common/helper/services/helper.identifier.service';
 import { IAwsS3 } from 'src/common/aws/aws.interface';
+import { IDatabaseFindAllOptions } from '../../../common/database/database.interface';
 
 @Injectable()
 export class CategoryService {
@@ -54,5 +55,28 @@ export class CategoryService {
 
   async findById(id: string): Promise<any> {
     return this.categoryModel.findById(id);
+  }
+
+  async findAll(
+    find?: Record<string, any>,
+    options?: IDatabaseFindAllOptions,
+  ): Promise<CategoryDocument[]> {
+    const categories = this.categoryModel
+      .find(find)
+      .populate({ path: 'parentCategory', model: Category.name });
+
+    if (options && options.limit !== undefined && options.skip !== undefined) {
+      categories.limit(options.limit).skip(options.skip);
+    }
+
+    if (options && options.sort) {
+      categories.sort(options.sort);
+    }
+
+    return categories.lean();
+  }
+
+  async getTotal(find?: Record<string, any>): Promise<number> {
+    return this.categoryModel.countDocuments(find);
   }
 }

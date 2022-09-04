@@ -7,6 +7,8 @@ import {
 } from '@nestjs/common';
 import { APP_PIPE } from '@nestjs/core';
 import { ENUM_REQUEST_STATUS_CODE_ERROR } from './constants/request.status-code.constant';
+import { MinGreaterThanConstraint } from './validations/request.min-greater-than.validation';
+import { SkipConstraint } from './validations/request.skip.validation';
 
 @Module({
   controllers: [],
@@ -30,6 +32,8 @@ import { ENUM_REQUEST_STATUS_CODE_ERROR } from './constants/request.status-code.
             }),
         }),
     },
+    SkipConstraint,
+    MinGreaterThanConstraint,
   ],
   imports: [],
 })

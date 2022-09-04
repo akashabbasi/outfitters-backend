@@ -1,15 +1,15 @@
 import { Exclude, Type } from 'class-transformer';
 
-export class CreateCategorySerialization {
+export class CategoryGetSerialization {
   @Type(() => String)
   readonly _id: string;
 
   readonly name: string;
   readonly description: string;
-  @Exclude()
+
   readonly isActive: boolean;
   readonly imageUrl: string;
-  
+
   @Type(() => String)
   readonly parentCategory?: string;
 
