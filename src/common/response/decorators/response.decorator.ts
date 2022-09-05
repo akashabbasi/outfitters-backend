@@ -10,6 +10,7 @@ import {
   RESPONSE_CUSTOM_TIMEOUT_META_KEY,
   RESPONSE_CUSTOM_TIMEOUT_VALUE_META_KEY,
 } from '../constants/response.constant';
+import { ResponsePagingInterceptor } from '../interceptors/response.paging.interceptor';
 
 export function Response(options?: IResponseOptions): any {
   return applyDecorators(
@@ -27,7 +28,7 @@ export function ResponsePagingType(type: ENUM_PAGINATION_TYPE): any {
 
 export function ResponsePaging(options?: IResponseOptions): any {
   return applyDecorators(
-    UseInterceptors(),
+    UseInterceptors(ResponsePagingInterceptor),
     SetMetadata(
       RESPONSE_SERIALIZATION_META_KEY,
       options ? options.classSerialization : undefined,

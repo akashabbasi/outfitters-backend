@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Category, CategoryDocument } from '../schemas/category.schema';
 import { DatabaseEntity } from 'src/common/database/decorators/database.decorator';
 import { Model } from 'mongoose';

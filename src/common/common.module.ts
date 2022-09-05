@@ -13,6 +13,7 @@ import { ResponseModule } from 'src/common/response/response.module';
 import { MiddlewareModule } from 'src/common/middleware/middleware.module';
 import { ErrorModule } from 'src/common/error/error.module';
 import { HelperModule } from 'src/common/helper/helper.module';
+import { PaginationModule } from './pagination/pagination.module';
 
 @Module({
   imports: [
@@ -103,9 +104,10 @@ import { HelperModule } from 'src/common/helper/helper.module';
         databaseOptionsService.createMongooseOptions(),
     }),
     HelperModule,
+    PaginationModule,
     ErrorModule,
-    RequestModule,
     ResponseModule,
+    RequestModule,
     MiddlewareModule,
   ],
   providers: []

@@ -25,7 +25,6 @@ export class CategoryCreateDto {
 
   @IsCategoryExist()
   @IsMongoId()
-  @Length(24)
   @Type(() => String)
   @IsOptional()
   parentCategory: string;

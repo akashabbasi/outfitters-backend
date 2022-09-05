@@ -59,21 +59,17 @@ export class CategoryController {
     };
   }
 
-  @Get()
   @ResponsePaging({
     classSerialization: CategoryListSerialization,
   })
+  @Get()
   async findAll(
     @Query()
-    {
-      page,
-      perPage,
-      sort,
-      search,
-      availableSearch,
-      availableSort,
-    }: CategoryListDto,
+    categoryListDto: CategoryListDto,
   ): Promise<IResponsePaging> {
+    const { page, perPage, sort, search, availableSearch, availableSort } =
+      categoryListDto;
+    console.log(page, perPage, sort, search, availableSearch, availableSearch);
     const skip: number = await this.paginationService.skip(page, perPage);
     const find: Record<string, any> = {
       ...search,
@@ -96,6 +92,9 @@ export class CategoryController {
     );
 
     return {
+      metadata: {
+        message: 'Categories Retrieved Successfully',
+      },
       totalData,
       totalPage,
       currentPage: page,

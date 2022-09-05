@@ -149,6 +149,7 @@ export function PaginationFilterId(
   return applyDecorators(
     Expose(),
     IsMongoId(),
+    options && options.required ? IsNotEmpty() : Skip(),
     options && options.required
       ? Skip()
       : ValidateIf((e) => e[field] !== '' && e[field]),
@@ -184,7 +185,7 @@ export function PaginationFilterDate(
 
 export function PaginationFilterString(
   field: string,
-  options: IPaginationFilterStringOptions,
+  options?: IPaginationFilterStringOptions,
 ): any {
   return applyDecorators(
     Expose(),

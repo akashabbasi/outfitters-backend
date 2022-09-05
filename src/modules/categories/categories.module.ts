@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AwsModule } from 'src/common/aws/aws.module';
 import { DATABASE_CONNECTION_NAME } from 'src/common/database/constants/database.constant';
-import { HelperModule } from 'src/common/helper/helper.module';
 import { CategoryController } from './controllers/category.controller';
 import {
   Category,

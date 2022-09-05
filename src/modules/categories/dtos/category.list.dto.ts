@@ -1,5 +1,6 @@
 import {
   PaginationAvailableSearch,
+  PaginationAvailableSort,
   PaginationPage,
   PaginationPerPage,
   PaginationSearch,
@@ -7,7 +8,6 @@ import {
 } from 'src/common/pagination/decorators/pagination.decorator';
 import { IPaginationSort } from 'src/common/pagination/pagination.interface';
 import { PaginationListAbstract } from '../../../common/pagination/abstracts/pagination.abstract';
-import { PaginationAvailableSort } from '../../../common/pagination/decorators/pagination.decorator';
 import {
   CATEGORY_DEFAULT_PER_PAGE,
   CATEGORY_DEFAULT_SORT,
