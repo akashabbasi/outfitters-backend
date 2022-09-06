@@ -35,8 +35,9 @@ export function PaginationSearch(availableSearch: string[]): any {
     IsOptional(),
     IsObject(),
     ValidateIf((e) => e.search !== ''),
-    Transform(({ value }) =>
-      value
+    Transform(({ value }) => {
+      // if (typeof value !== 'object') return value;
+      return value
         ? {
             $or: availableSearch.map((val) => ({
               [val]: {
@@ -45,31 +46,38 @@ export function PaginationSearch(availableSearch: string[]): any {
               },
             })),
           }
-        : undefined,
-    ),
+        : undefined;
+    }),
   );
 }
 
 export function PaginationAvailableSearch(availableSearch: string[]): any {
   return applyDecorators(
     Expose(),
+    IsOptional(),
     Transform(() => availableSearch),
   );
 }
 
 export function PaginationPage(page = PAGINATION_PAGE): any {
   return applyDecorators(
-    Expose(),
-    Type(() => Number),
-    Transform(({ value }) =>
-      !value ? page : value > PAGINATION_MAX_PAGE ? PAGINATION_MAX_PAGE : value,
-    ),
+    Expose() as PropertyDecorator,
+    IsOptional(),
+    Type(() => Number) as PropertyDecorator,
+    Transform(({ value }) => {
+      return !value
+        ? page
+        : value > PAGINATION_MAX_PAGE
+        ? PAGINATION_MAX_PAGE
+        : value;
+    }) as PropertyDecorator,
   );
 }
 
 export function PaginationPerPage(perPage = PAGINATION_PER_PAGE): any {
   return applyDecorators(
     Expose(),
+    IsOptional(),
     Type(() => Number),
     Transform(({ value }) =>
       !value
@@ -87,6 +95,7 @@ export function PaginationSort(
 ): any {
   return applyDecorators(
     Expose(),
+    IsOptional(),
     Transform(({ value, obj }) => {
       const bSort = PAGINATION_SORT.split('@')[0];
       const rSort = value || sort;
@@ -110,6 +119,7 @@ export function PaginationAvailableSort(
 ): any {
   return applyDecorators(
     Expose(),
+    IsOptional(),
     Transform(({ value }) => (!value ? availableSort : value)),
   );
 }
@@ -117,6 +127,7 @@ export function PaginationAvailableSort(
 export function PaginationFilterBoolean(defaultValue: boolean[]): any {
   return applyDecorators(
     Expose(),
+    IsOptional(),
     IsBoolean({ each: true }),
     Transform(({ value }) =>
       value
@@ -129,10 +140,11 @@ export function PaginationFilterBoolean(defaultValue: boolean[]): any {
 export function PaginationFilterEnum<T>(
   defaultValue: T[],
   defaultEnum: Record<string, any>,
-) {
+): any {
   const cEnum = defaultEnum as unknown;
   return applyDecorators(
     Expose(),
+    IsOptional(),
     IsEnum(cEnum as object, { each: true }),
     Transform(({ value }) =>
       value
@@ -148,6 +160,7 @@ export function PaginationFilterId(
 ): any {
   return applyDecorators(
     Expose(),
+    IsOptional(),
     IsMongoId(),
     options && options.required ? IsNotEmpty() : Skip(),
     options && options.required
@@ -163,6 +176,7 @@ export function PaginationFilterDate(
   return applyDecorators(
     Expose(),
     IsDate(),
+    IsOptional(),
     Type(() => Date),
     options && options.required ? IsNotEmpty() : IsOptional(),
     options && options.required
@@ -190,6 +204,7 @@ export function PaginationFilterString(
   return applyDecorators(
     Expose(),
     IsString(),
+    IsOptional(),
     options && options.lowercase
       ? Transform(({ value }) =>
           value

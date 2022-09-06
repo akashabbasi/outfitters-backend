@@ -7,15 +7,13 @@ import {
   PaginationSort,
 } from 'src/common/pagination/decorators/pagination.decorator';
 import { IPaginationSort } from 'src/common/pagination/pagination.interface';
-import { PaginationListAbstract } from '../../../common/pagination/abstracts/pagination.abstract';
+import { PaginationListAbstract } from 'src/common/pagination/abstracts/pagination.abstract';
 import {
+  CATEGORY_DEFAULT_PAGE,
   CATEGORY_DEFAULT_PER_PAGE,
   CATEGORY_DEFAULT_SORT,
   CATEGORY_DEFAULT_AVAILABLE_SORT,
-} from '../constants/category.list.constant';
-import {
   CATEGORY_DEFAULT_AVAILABLE_SEARCH,
-  CATEGORY_DEFAULT_PAGE,
 } from '../constants/category.list.constant';
 export class CategoryListDto implements PaginationListAbstract {
   @PaginationSearch(CATEGORY_DEFAULT_AVAILABLE_SEARCH)

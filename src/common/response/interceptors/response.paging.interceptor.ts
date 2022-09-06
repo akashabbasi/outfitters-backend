@@ -38,7 +38,7 @@ export class ResponsePagingInterceptor
     next: CallHandler,
   ): Promise<Observable<Promise<ResponsePagingDto>>> {
     if (context.getType() === 'http') {
-      // console.log(context.switchToHttp().getRequest<IRequestApp>().query);
+
       return next.handle().pipe(
         map(async (responseData: Promise<ResponsePagingDto>) => {
           const ctx: HttpArgumentsHost = context.switchToHttp();
@@ -121,6 +121,7 @@ export class ResponsePagingInterceptor
                 ? `${path}?perPage=${perPage}&page=${totalPage}`
                 : undefined,
           };
+
           const resMetadata: IErrorHttpFilterMetadata = {
             requestId: __requestId,
             path: __path,

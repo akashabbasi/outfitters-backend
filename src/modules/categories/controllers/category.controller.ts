@@ -69,12 +69,11 @@ export class CategoryController {
   ): Promise<IResponsePaging> {
     const { page, perPage, sort, search, availableSearch, availableSort } =
       categoryListDto;
-    console.log(page, perPage, sort, search, availableSearch, availableSearch);
+    console.log(categoryListDto);
     const skip: number = await this.paginationService.skip(page, perPage);
     const find: Record<string, any> = {
       ...search,
     };
-
     const result: [CategoryDocument[], number] = await Promise.all([
       this.categoryService.findAll(find, {
         limit: perPage,
