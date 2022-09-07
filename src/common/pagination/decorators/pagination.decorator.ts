@@ -61,9 +61,9 @@ export function PaginationAvailableSearch(availableSearch: string[]): any {
 
 export function PaginationPage(page = PAGINATION_PAGE): any {
   return applyDecorators(
-    Expose() as PropertyDecorator,
+    Expose(),
     IsOptional(),
-    Type(() => Number) as PropertyDecorator,
+    Type(() => Number),
     Transform(({ value }) => {
       return !value
         ? page
