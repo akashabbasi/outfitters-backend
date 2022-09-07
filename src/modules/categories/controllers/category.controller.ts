@@ -2,6 +2,8 @@ import {
   Body,
   Controller,
   Get,
+  NotFoundException,
+  Param,
   Post,
   Query,
   UploadedFile,
@@ -26,6 +28,9 @@ import { CategoryListDto } from '../dtos/category.list.dto';
 import { PaginationService } from 'src/common/pagination/services/pagination.service';
 import { CategoryDocument } from '../schemas/category.schema';
 import { CategoryListSerialization } from '../serializations/category.list.serialization';
+import { CategoryGetDto } from '../dtos/category.get.dto';
+import { ENUM_CATEGORY_STATUS_CODE_ERROR } from '../constants/category.status-code.constant';
+import { CategoryGetSerialization } from '../serializations/category.get.serialization';
 
 @Controller({
   version: '1',
@@ -51,6 +56,7 @@ export class CategoryController {
       createCategoryDto,
       file,
     );
+
     return {
       metadata: {
         message: 'Category created successfully',
@@ -104,7 +110,28 @@ export class CategoryController {
     };
   }
 
-  async findOne() {}
+  @Response({
+    classSerialization: CategoryGetSerialization,
+  })
+  @Get(':id')
+  async findOne(@Param() categoryGetDto: CategoryGetDto): Promise<IResponse> {
+    const category = await this.categoryService.findById(categoryGetDto.id);
+
+    if (!category)
+      throw new NotFoundException({
+        statusCode: ENUM_CATEGORY_STATUS_CODE_ERROR.CATEGORY_NOT_FOUND,
+        message: 'category.error.notFound',
+      });
+
+    return {
+      metadata: {
+        message: 'Category details retrieved successfully',
+      },
+      ...category,
+    };
+  }
+
   async update() {}
+  
   async toggleActiveStatus() {}
 }

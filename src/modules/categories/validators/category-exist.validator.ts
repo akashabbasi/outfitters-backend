@@ -14,16 +14,17 @@ export class IsCategoryExistConstraint implements ValidatorConstraintInterface {
   constructor(private readonly categoryService: CategoryService) {}
 
   async validate(
-    value: any,
+    value: string,
     validationArguments?: ValidationArguments,
   ): Promise<boolean> {
     if (!value) return true;
+
     return this.categoryService
       .findById(value)
       .then((category) => (category ? true : false));
   }
   defaultMessage?(validationArguments?: ValidationArguments): string {
-    return `Category not found`;
+    return `Category not found for ${validationArguments.targetName}:${validationArguments.value}`;
   }
 }
 

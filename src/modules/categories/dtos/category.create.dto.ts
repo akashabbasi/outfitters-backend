@@ -2,7 +2,6 @@ import { Type } from 'class-transformer';
 import {
   IsNotEmpty,
   IsString,
-  Length,
   MaxLength,
   MinLength,
   IsMongoId,
@@ -23,9 +22,9 @@ export class CategoryCreateDto {
   @Type(() => String)
   description: string;
 
-  @IsCategoryExist()
   @IsMongoId()
   @Type(() => String)
   @IsOptional()
+  // @IsCategoryExist()
   parentCategory: string;
 }

@@ -53,8 +53,8 @@ export class CategoryService {
 
   async findOne() {}
 
-  async findById(id: string): Promise<any> {
-    return this.categoryModel.findById(id);
+  async findById(id: string): Promise<ICategory> {
+    return (await this.categoryModel.findById(id)).toObject();
   }
 
   async findAll(
