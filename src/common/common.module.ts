@@ -14,6 +14,7 @@ import { MiddlewareModule } from 'src/common/middleware/middleware.module';
 import { ErrorModule } from 'src/common/error/error.module';
 import { HelperModule } from 'src/common/helper/helper.module';
 import { PaginationModule } from './pagination/pagination.module';
+import { FileModule } from './file/file.module';
 
 @Module({
   imports: [
@@ -104,6 +105,7 @@ import { PaginationModule } from './pagination/pagination.module';
         databaseOptionsService.createMongooseOptions(),
     }),
     HelperModule,
+    FileModule,
     PaginationModule,
     ErrorModule,
     ResponseModule,

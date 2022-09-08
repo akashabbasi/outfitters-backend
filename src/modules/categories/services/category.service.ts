@@ -4,13 +4,14 @@ import { DatabaseEntity } from 'src/common/database/decorators/database.decorato
 import { Model } from 'mongoose';
 import path from 'path';
 import { CategoryCreateDto } from '../dtos/category.create.dto';
-import { IFile } from 'src/common/file/file.interface';
+import { IFile, IFileUploadDetails } from 'src/common/file/file.interface';
 import { ConfigService } from '@nestjs/config';
-import { ICategory } from '../interfaces/category.interface';
+import { ICategory, ICategoryUpdate } from '../interfaces/category.interface';
 import { AwsS3Service } from 'src/common/aws/services/aws.s3.service';
 import { HelperIdentifierService } from 'src/common/helper/services/helper.identifier.service';
 import { IAwsS3 } from 'src/common/aws/aws.interface';
 import { IDatabaseFindAllOptions } from '../../../common/database/database.interface';
+import { FileService } from 'src/common/file/services/file.service';
 
 @Injectable()
 export class CategoryService {
@@ -20,6 +21,7 @@ export class CategoryService {
     private readonly configService: ConfigService,
     @DatabaseEntity(Category.name)
     private readonly categoryModel: Model<CategoryDocument>,
+    private readonly fileService: FileService,
     private readonly helperIdentifierService: HelperIdentifierService,
     private readonly awsS3Service: AwsS3Service,
   ) {
@@ -31,14 +33,13 @@ export class CategoryService {
     file: IFile,
   ): Promise<ICategory> {
     // upload image to s3
-    const content: Buffer = file.buffer;
-    const extension: string = path.extname(file.originalname);
-    const uniqueId: string = this.helperIdentifierService.uniqueId();
-    const filename = `${uniqueId}${extension}`;
+    const { content, filename, mimeType }: IFileUploadDetails =
+      this.fileService.getFileUploadDetails(file);
+
     const uploadedItem: IAwsS3 = await this.awsS3Service.putItemInBucket(
       filename,
       content,
-      file.mimetype,
+      mimeType,
       {
         path: `${this.uploadPath}`,
       },
@@ -78,5 +79,60 @@ export class CategoryService {
 
   async getTotal(find?: Record<string, any>): Promise<number> {
     return this.categoryModel.countDocuments(find);
+  }
+
+  async toggleActivation(id: string): Promise<ICategory> {
+    return await this.categoryModel.findOneAndUpdate(
+      {
+        _id: id,
+      },
+      [
+        {
+          $set: {
+            isActive: {
+              $eq: [false, '$isActive'],
+            },
+          },
+        },
+      ],
+      {
+        new: true,
+        lean: true,
+      },
+    );
+  }
+
+  async update(
+    id: string,
+    { update, file }: ICategoryUpdate,
+  ): Promise<ICategory> {
+    let uploadedItem: IAwsS3;
+    if (file) {
+      const { content, filename, mimeType }: IFileUploadDetails =
+        this.fileService.getFileUploadDetails(file);
+
+      uploadedItem = await this.awsS3Service.putItemInBucket(
+        filename,
+        content,
+        mimeType,
+        {
+          path: `${this.uploadPath}`,
+        },
+      );
+    }
+
+    const categoryDetailsUpdate = {
+      ...update,
+      ...(uploadedItem && { imageUrl: uploadedItem.completedUrl }),
+    };
+
+    return await this.categoryModel.findByIdAndUpdate(
+      id,
+      categoryDetailsUpdate,
+      {
+        new: true,
+        lean: true,
+      },
+    );
   }
 }
