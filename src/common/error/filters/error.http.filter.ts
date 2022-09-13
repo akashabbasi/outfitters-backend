@@ -35,7 +35,6 @@ export class ErrorHttpFilter implements ExceptionFilter {
       responseExpress.status(httpStatusCode).json(response);
       return;
     }
-
     const responseException = response as IErrorException;
     const { statusCode, message, error, errors, data, metadata } =
       responseException;

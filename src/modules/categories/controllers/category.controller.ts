@@ -143,8 +143,8 @@ export class CategoryController {
   @Response({
     classSerialization: CategoryUpdateSerialization,
   })
-  @UseGuards(PayloadExistGuard)
   @UploadCategoryImage('image')
+  @UseGuards(PayloadExistGuard)
   @RequestParamGuard(CategoryRequestDto)
   @Patch(':id')
   async update(
@@ -152,6 +152,7 @@ export class CategoryController {
     @Param('id') categoryId: string,
     @UploadedFile(FileSizeImagePipe) file: IFile,
   ): Promise<IResponse> {
+
     const category = await this.categoryService.update(categoryId, {
       update: categoryUpdateDto,
       file,
@@ -166,7 +167,7 @@ export class CategoryController {
   }
 
   @Response({
-    classSerialization: CreateCategorySerialization,
+    classSerialization: CategoryUpdateSerialization,
   })
   @Patch(':id/is-active')
   async toggleActivation(

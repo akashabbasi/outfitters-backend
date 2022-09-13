@@ -36,9 +36,10 @@ export class FileSizeImagePipe implements PipeTransform {
     );
 
     if (size > maxSizeOnBytes) {
+      const megaBytes = maxSizeOnBytes / (1024 ** 2);
       throw new PayloadTooLargeException({
         statusCode: ENUM_FILE_STATUS_CODE_ERROR.FILE_MAX_SIZE_ERROR,
-        message: 'file.error.maxSize',
+        message: `Max File size allowed is ${megaBytes}MB`,
       });
     }
 
